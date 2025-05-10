@@ -29,25 +29,27 @@
 </head>
 
 <body>
-  <nav class="minimal-navbar">
+  <!-- Desktop Navbar (hidden on mobile) -->
+  <nav class="minimal-navbar desktop-navbar">
     <div class="container">
       <div class="navbar-content">
         <div class="navbar-left">
           <div class="resume-toggle">
             <div class="button-toggle-container">
-              <button id="full-resume-btn" class="toggle-button toggle-button-active">Full</button>
-              <button id="condensed-resume-btn" class="toggle-button">Condensed</button>
+              <button id="full-resume-btn-desktop" class="toggle-button toggle-button-active">Full</button>
+              <button id="condensed-resume-btn-desktop" class="toggle-button">Condensed</button>
             </div>
           </div>
         </div>
 
         <div class="navbar-center">
           <div class="page-controls">
-            <button id="prev-page" class="control-btn" title="Previous Page">
+            <button id="prev-page-desktop" class="control-btn" title="Previous Page">
               <i class="fas fa-chevron-left"></i>
             </button>
-            <span id="page-info">Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
-            <button id="next-page" class="control-btn" title="Next Page">
+            <span id="page-info-desktop">Page <span id="current-page-desktop">1</span> of <span
+                id="total-pages-desktop">1</span></span>
+            <button id="next-page-desktop" class="control-btn" title="Next Page">
               <i class="fas fa-chevron-right"></i>
             </button>
           </div>
@@ -55,19 +57,72 @@
 
         <div class="navbar-right">
           <div class="zoom-controls">
-            <button id="zoom-out" class="control-btn" title="Zoom Out">
+            <button id="zoom-out-desktop" class="control-btn" title="Zoom Out">
               <i class="fas fa-search-minus"></i>
             </button>
-            <span id="zoom-level">100%</span>
-            <button id="zoom-in" class="control-btn" title="Zoom In">
+            <span id="zoom-level-desktop">100%</span>
+            <button id="zoom-in-desktop" class="control-btn" title="Zoom In">
               <i class="fas fa-search-plus"></i>
             </button>
           </div>
 
           <div class="action-controls">
-            <a id="download-btn" class="control-btn" title="Download Resume" download>
+            <a id="download-btn-desktop" class="control-btn" title="Download Resume" download>
               <i class="fas fa-download"></i>
             </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Navbar (hidden on desktop) -->
+  <nav class="minimal-navbar mobile-navbar">
+    <div class="container">
+      <div class="navbar-content">
+        <!-- First row: Resume toggle -->
+        <div class="navbar-left">
+          <div class="resume-toggle">
+            <div class="button-toggle-container">
+              <button id="full-resume-btn-mobile" class="toggle-button toggle-button-active">Full</button>
+              <button id="condensed-resume-btn-mobile" class="toggle-button">Condensed</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Second row: Controls in horizontal layout -->
+        <div class="mobile-controls">
+          <!-- Left side: Page controls -->
+          <div class="navbar-center">
+            <div class="page-controls">
+              <button id="prev-page-mobile" class="control-btn" title="Previous Page">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <span id="page-info-mobile">Page <span id="current-page-mobile">1</span> of <span
+                  id="total-pages-mobile">1</span></span>
+              <button id="next-page-mobile" class="control-btn" title="Next Page">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Right side: Zoom and download -->
+          <div class="navbar-right">
+            <div class="zoom-controls">
+              <button id="zoom-out-mobile" class="control-btn" title="Zoom Out">
+                <i class="fas fa-search-minus"></i>
+              </button>
+              <span id="zoom-level-mobile">100%</span>
+              <button id="zoom-in-mobile" class="control-btn" title="Zoom In">
+                <i class="fas fa-search-plus"></i>
+              </button>
+            </div>
+
+            <div class="action-controls">
+              <a id="download-btn-mobile" class="control-btn" title="Download Resume" download>
+                <i class="fas fa-download"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>

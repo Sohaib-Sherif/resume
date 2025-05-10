@@ -325,7 +325,65 @@ main {
     }
 }
 
+/* Navbar visibility */
+.desktop-navbar {
+    display: block;
+}
+
+.mobile-navbar {
+    display: none;
+}
+
+/* Mobile controls layout */
+.mobile-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 5px;
+}
+
+/* Mobile navbar specific styles - always apply these regardless of screen size */
+.mobile-navbar .navbar-center,
+.mobile-navbar .navbar-right {
+    width: auto !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    margin: 0 !important;
+    flex-wrap: nowrap !important;
+}
+
+.mobile-navbar .navbar-right {
+    justify-content: flex-end !important;
+    gap: 5px !important;
+}
+
+.mobile-navbar .page-controls,
+.mobile-navbar .zoom-controls,
+.mobile-navbar .action-controls {
+    flex-direction: row !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+}
+
+.mobile-navbar .mobile-controls {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    margin-top: 5px !important;
+}
+
 @media (max-width: 576px) {
+
+    /* Show mobile navbar, hide desktop navbar */
+    .desktop-navbar {
+        display: none;
+    }
+
+    .mobile-navbar {
+        display: block;
+    }
 
     /* Navbar adjustments for mobile */
     .minimal-navbar {
@@ -334,6 +392,58 @@ main {
 
     .navbar-content {
         gap: 5px;
+        flex-direction: column;
+    }
+
+    /* First row: Resume toggle */
+    .navbar-left {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 5px;
+    }
+
+    /* Mobile navbar adjustments */
+    .mobile-navbar .navbar-content {
+        flex-direction: column !important;
+    }
+
+    .mobile-navbar .navbar-left {
+        width: 100% !important;
+        justify-content: center !important;
+        margin-bottom: 5px !important;
+    }
+
+    .mobile-navbar .navbar-center {
+        width: 60% !important;
+        justify-content: flex-start !important;
+    }
+
+    .mobile-navbar .navbar-right {
+        width: 40% !important;
+        justify-content: flex-end !important;
+    }
+
+    /* Fix for page info text wrapping */
+    .mobile-navbar #page-info-mobile {
+        white-space: nowrap !important;
+        font-size: 10px !important;
+    }
+
+    /* Make mobile controls smaller */
+    .mobile-navbar .control-btn {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 10px !important;
+    }
+
+    .mobile-navbar #zoom-level-mobile {
+        font-size: 10px !important;
+    }
+
+    .mobile-navbar .zoom-controls,
+    .mobile-navbar .page-controls,
+    .mobile-navbar .action-controls {
+        gap: 3px !important;
     }
 
     .button-toggle-container {
@@ -372,19 +482,6 @@ main {
     .page-controls,
     .action-controls {
         gap: 5px;
-    }
-
-    /* Compact navbar layout */
-    .navbar-left,
-    .navbar-center,
-    .navbar-right {
-        gap: 5px;
-        margin-bottom: 2px;
-    }
-
-    /* Last navbar section doesn't need bottom margin */
-    .navbar-right {
-        margin-bottom: 0;
     }
 
     /* Footer adjustments for mobile */

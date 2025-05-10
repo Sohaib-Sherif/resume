@@ -15,17 +15,31 @@ const resumePaths = {
     condensed: 'resume_condensed.pdf'
 };
 
-// DOM Elements
-const fullResumeBtn = document.getElementById('full-resume-btn');
-const condensedResumeBtn = document.getElementById('condensed-resume-btn');
-const zoomIn = document.getElementById('zoom-in');
-const zoomOut = document.getElementById('zoom-out');
-const zoomLevel = document.getElementById('zoom-level');
-const prevPage = document.getElementById('prev-page');
-const nextPage = document.getElementById('next-page');
-const currentPage = document.getElementById('current-page');
-const totalPages = document.getElementById('total-pages');
-const downloadBtn = document.getElementById('download-btn');
+// DOM Elements - Desktop
+const fullResumeBtnDesktop = document.getElementById('full-resume-btn-desktop');
+const condensedResumeBtnDesktop = document.getElementById('condensed-resume-btn-desktop');
+const zoomInDesktop = document.getElementById('zoom-in-desktop');
+const zoomOutDesktop = document.getElementById('zoom-out-desktop');
+const zoomLevelDesktop = document.getElementById('zoom-level-desktop');
+const prevPageDesktop = document.getElementById('prev-page-desktop');
+const nextPageDesktop = document.getElementById('next-page-desktop');
+const currentPageDesktop = document.getElementById('current-page-desktop');
+const totalPagesDesktop = document.getElementById('total-pages-desktop');
+const downloadBtnDesktop = document.getElementById('download-btn-desktop');
+
+// DOM Elements - Mobile
+const fullResumeBtnMobile = document.getElementById('full-resume-btn-mobile');
+const condensedResumeBtnMobile = document.getElementById('condensed-resume-btn-mobile');
+const zoomInMobile = document.getElementById('zoom-in-mobile');
+const zoomOutMobile = document.getElementById('zoom-out-mobile');
+const zoomLevelMobile = document.getElementById('zoom-level-mobile');
+const prevPageMobile = document.getElementById('prev-page-mobile');
+const nextPageMobile = document.getElementById('next-page-mobile');
+const currentPageMobile = document.getElementById('current-page-mobile');
+const totalPagesMobile = document.getElementById('total-pages-mobile');
+const downloadBtnMobile = document.getElementById('download-btn-mobile');
+
+// Common DOM Elements
 const downloadFullBtn = document.getElementById('download-full-btn');
 const downloadCondensedBtn = document.getElementById('download-condensed-btn');
 const fullscreenBtn = document.getElementById('fullscreen-btn');
@@ -35,10 +49,11 @@ const loadingIndicator = document.querySelector('.loading-indicator');
 // Initialize the viewer
 document.addEventListener('DOMContentLoaded', () => {
     // Update zoom level display to match initial scale
-    zoomLevel.textContent = `${Math.round(scale * 100)}%`;
+    updateZoomLevels();
     
     // Set the download button href to the default resume
-    downloadBtn.href = resumePaths.full;
+    downloadBtnDesktop.href = resumePaths.full;
+    downloadBtnMobile.href = resumePaths.full;
     
     // Load the default resume (full version)
     loadPdf(resumePaths.full);
@@ -46,6 +61,31 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set up event listeners
     setupEventListeners();
 });
+
+/**
+ * Update all zoom level displays
+ */
+function updateZoomLevels() {
+    const zoomPercent = `${Math.round(scale * 100)}%`;
+    zoomLevelDesktop.textContent = zoomPercent;
+    zoomLevelMobile.textContent = zoomPercent;
+}
+
+/**
+ * Update all page number displays
+ */
+function updatePageNumbers() {
+    currentPageDesktop.textContent = pageNum;
+    currentPageMobile.textContent = pageNum;
+}
+
+/**
+ * Update all total pages displays
+ */
+function updateTotalPages(total) {
+    totalPagesDesktop.textContent = total;
+    totalPagesMobile.textContent = total;
+}
 
 /**
  * Load a PDF file
@@ -58,10 +98,11 @@ function loadPdf(url) {
     // Load the PDF
     pdfjsLib.getDocument(url).promise.then(pdf => {
         pdfDoc = pdf;
-        totalPages.textContent = pdf.numPages;
+        updateTotalPages(pdf.numPages);
         
-        // Set download link
-        downloadBtn.href = url;
+        // Set download links
+        downloadBtnDesktop.href = url;
+        downloadBtnMobile.href = url;
         
         // Render the first page
         renderPage(pageNum);
@@ -106,8 +147,8 @@ function renderPage(num) {
             pageRendering = false;
             loadingIndicator.style.display = 'none';
             
-            // Update current page display
-            currentPage.textContent = num;
+            // Update current page display on both navbars
+            updatePageNumbers();
             
             // Check if there's a pending page
             if (pageNumPending !== null) {
@@ -154,7 +195,7 @@ function nextPageHandler() {
 function zoomInHandler() {
     if (scale >= 4.0) return; // Allow higher maximum zoom
     scale += 0.2;
-    zoomLevel.textContent = `${Math.round(scale * 100)}%`;
+    updateZoomLevels();
     queueRenderPage(pageNum);
 }
 
@@ -164,7 +205,7 @@ function zoomInHandler() {
 function zoomOutHandler() {
     if (scale <= 0.5) return; // Allow lower minimum zoom
     scale -= 0.2;
-    zoomLevel.textContent = `${Math.round(scale * 100)}%`;
+    updateZoomLevels();
     queueRenderPage(pageNum);
 }
 
@@ -175,22 +216,39 @@ function zoomOutHandler() {
 function toggleResume(isCondensed) {
     const resumePath = isCondensed ? resumePaths.condensed : resumePaths.full;
     
-    // Update active button styling
+    // Update active button styling for both desktop and mobile
     if (isCondensed) {
-        fullResumeBtn.classList.remove('toggle-button-active');
-        condensedResumeBtn.classList.add('toggle-button-active');
-        downloadBtn.setAttribute('title', 'Download Condensed Resume');
+        // Desktop buttons
+        fullResumeBtnDesktop.classList.remove('toggle-button-active');
+        condensedResumeBtnDesktop.classList.add('toggle-button-active');
+        
+        // Mobile buttons
+        fullResumeBtnMobile.classList.remove('toggle-button-active');
+        condensedResumeBtnMobile.classList.add('toggle-button-active');
+        
+        // Update download button titles
+        downloadBtnDesktop.setAttribute('title', 'Download Condensed Resume');
+        downloadBtnMobile.setAttribute('title', 'Download Condensed Resume');
     } else {
-        fullResumeBtn.classList.add('toggle-button-active');
-        condensedResumeBtn.classList.remove('toggle-button-active');
-        downloadBtn.setAttribute('title', 'Download Full Resume');
+        // Desktop buttons
+        fullResumeBtnDesktop.classList.add('toggle-button-active');
+        condensedResumeBtnDesktop.classList.remove('toggle-button-active');
+        
+        // Mobile buttons
+        fullResumeBtnMobile.classList.add('toggle-button-active');
+        condensedResumeBtnMobile.classList.remove('toggle-button-active');
+        
+        // Update download button titles
+        downloadBtnDesktop.setAttribute('title', 'Download Full Resume');
+        downloadBtnMobile.setAttribute('title', 'Download Full Resume');
     }
     
     // Reset page number
     pageNum = 1;
     
-    // Update download button in the controls
-    downloadBtn.href = resumePath;
+    // Update download buttons in the controls
+    downloadBtnDesktop.href = resumePath;
+    downloadBtnMobile.href = resumePath;
     
     // Load the selected resume
     loadPdf(resumePath);
@@ -200,18 +258,29 @@ function toggleResume(isCondensed) {
  * Set up all event listeners
  */
 function setupEventListeners() {
-    // Resume toggle buttons
-    fullResumeBtn.addEventListener('click', () => toggleResume(false));
-    condensedResumeBtn.addEventListener('click', () => toggleResume(true));
+    // Resume toggle buttons - Desktop
+    fullResumeBtnDesktop.addEventListener('click', () => toggleResume(false));
+    condensedResumeBtnDesktop.addEventListener('click', () => toggleResume(true));
     
-    // Zoom controls
-    zoomIn.addEventListener('click', zoomInHandler);
-    zoomOut.addEventListener('click', zoomOutHandler);
+    // Resume toggle buttons - Mobile
+    fullResumeBtnMobile.addEventListener('click', () => toggleResume(false));
+    condensedResumeBtnMobile.addEventListener('click', () => toggleResume(true));
     
-    // Page navigation
-    prevPage.addEventListener('click', prevPageHandler);
-    nextPage.addEventListener('click', nextPageHandler);
-
+    // Zoom controls - Desktop
+    zoomInDesktop.addEventListener('click', zoomInHandler);
+    zoomOutDesktop.addEventListener('click', zoomOutHandler);
+    
+    // Zoom controls - Mobile
+    zoomInMobile.addEventListener('click', zoomInHandler);
+    zoomOutMobile.addEventListener('click', zoomOutHandler);
+    
+    // Page navigation - Desktop
+    prevPageDesktop.addEventListener('click', prevPageHandler);
+    nextPageDesktop.addEventListener('click', nextPageHandler);
+    
+    // Page navigation - Mobile
+    prevPageMobile.addEventListener('click', prevPageHandler);
+    nextPageMobile.addEventListener('click', nextPageHandler);
     
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
@@ -239,7 +308,7 @@ function setupEventListeners() {
                 (window.innerWidth < 768 && currentZoomPercent > 220) || 
                 (window.innerWidth >= 768 && currentZoomPercent < 180)) {
                 scale = defaultZoom;
-                zoomLevel.textContent = `${Math.round(scale * 100)}%`;
+                updateZoomLevels();
                 queueRenderPage(pageNum);
             }
         }
