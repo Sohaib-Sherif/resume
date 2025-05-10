@@ -16,7 +16,8 @@ const resumePaths = {
 };
 
 // DOM Elements
-const resumeSwitch = document.getElementById('resume-switch');
+const fullResumeBtn = document.getElementById('full-resume-btn');
+const condensedResumeBtn = document.getElementById('condensed-resume-btn');
 const zoomIn = document.getElementById('zoom-in');
 const zoomOut = document.getElementById('zoom-out');
 const zoomLevel = document.getElementById('zoom-level');
@@ -169,23 +170,27 @@ function zoomOutHandler() {
 
 /**
  * Toggle between full and condensed resume
+ * @param {boolean} isCondensed - Whether to show the condensed resume
  */
-function toggleResume() {
-    const isCondensed = resumeSwitch.checked;
+function toggleResume(isCondensed) {
     const resumePath = isCondensed ? resumePaths.condensed : resumePaths.full;
+    
+    // Update active button styling
+    if (isCondensed) {
+        fullResumeBtn.classList.remove('toggle-button-active');
+        condensedResumeBtn.classList.add('toggle-button-active');
+        downloadBtn.setAttribute('title', 'Download Condensed Resume');
+    } else {
+        fullResumeBtn.classList.add('toggle-button-active');
+        condensedResumeBtn.classList.remove('toggle-button-active');
+        downloadBtn.setAttribute('title', 'Download Full Resume');
+    }
     
     // Reset page number
     pageNum = 1;
     
     // Update download button in the controls
     downloadBtn.href = resumePath;
-    
-    // Update hidden download links
-    if (isCondensed) {
-        downloadBtn.setAttribute('title', 'Download Condensed Resume');
-    } else {
-        downloadBtn.setAttribute('title', 'Download Full Resume');
-    }
     
     // Load the selected resume
     loadPdf(resumePath);
@@ -195,8 +200,9 @@ function toggleResume() {
  * Set up all event listeners
  */
 function setupEventListeners() {
-    // Resume toggle
-    resumeSwitch.addEventListener('change', toggleResume);
+    // Resume toggle buttons
+    fullResumeBtn.addEventListener('click', () => toggleResume(false));
+    condensedResumeBtn.addEventListener('click', () => toggleResume(true));
     
     // Zoom controls
     zoomIn.addEventListener('click', zoomInHandler);
