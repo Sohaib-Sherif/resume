@@ -29,16 +29,11 @@
 </head>
 
 <body>
-  <header>
+  <nav class="minimal-navbar">
     <div class="container">
-      <div class="header-content">
-        <div class="logo">
-          <h1>Sohaib Sherif</h1>
-          <p>Full Stack Developer</p>
-        </div>
-        <nav>
+      <div class="navbar-content">
+        <div class="navbar-left">
           <div class="resume-toggle">
-            <span>Resume Version:</span>
             <div class="toggle-container">
               <input type="checkbox" id="resume-switch" class="toggle-input">
               <label for="resume-switch" class="toggle-label">
@@ -47,80 +42,70 @@
               </label>
             </div>
           </div>
-        </nav>
+        </div>
+
+        <div class="navbar-center">
+          <div class="page-controls">
+            <button id="prev-page" class="control-btn" title="Previous Page">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <span id="page-info">Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
+            <button id="next-page" class="control-btn" title="Next Page">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="navbar-right">
+          <div class="zoom-controls">
+            <button id="zoom-out" class="control-btn" title="Zoom Out">
+              <i class="fas fa-search-minus"></i>
+            </button>
+            <span id="zoom-level">100%</span>
+            <button id="zoom-in" class="control-btn" title="Zoom In">
+              <i class="fas fa-search-plus"></i>
+            </button>
+          </div>
+
+          <div class="action-controls">
+            <a id="download-btn" class="control-btn" title="Download Resume" download>
+              <i class="fas fa-download"></i>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
-  </header>
+  </nav>
 
   <main>
-    <div class="container">
-      <div class="pdf-controls">
-        <div class="zoom-controls">
-          <button id="zoom-out" class="control-btn" title="Zoom Out">
-            <i class="fas fa-search-minus"></i>
-          </button>
-          <span id="zoom-level">100%</span>
-          <button id="zoom-in" class="control-btn" title="Zoom In">
-            <i class="fas fa-search-plus"></i>
-          </button>
-        </div>
-        <div class="page-controls">
-          <button id="prev-page" class="control-btn" title="Previous Page">
-            <i class="fas fa-chevron-left"></i>
-          </button>
-          <span id="page-info">Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
-          <button id="next-page" class="control-btn" title="Next Page">
-            <i class="fas fa-chevron-right"></i>
-          </button>
-        </div>
-        <div class="action-controls">
-          <a id="download-btn" class="control-btn" title="Download Resume" download>
-            <i class="fas fa-download"></i>
-          </a>
-          <button id="fullscreen-btn" class="control-btn" title="Fullscreen">
-            <i class="fas fa-expand"></i>
-          </button>
-        </div>
+    <div class="pdf-container">
+      <canvas id="pdf-render"></canvas>
+      <div class="loading-indicator">
+        <div class="spinner"></div>
+        <p>Loading resume...</p>
       </div>
+    </div>
 
-      <div class="pdf-container">
-        <canvas id="pdf-render"></canvas>
-        <div class="loading-indicator">
-          <div class="spinner"></div>
-          <p>Loading resume...</p>
-        </div>
-      </div>
-
-      <div class="download-container">
-        <a id="download-full-btn" href="resume.pdf" download class="download-btn">
-          <i class="fas fa-download"></i> Download Full Resume
-        </a>
-        <a id="download-condensed-btn" href="resume_condensed.pdf" download class="download-btn">
-          <i class="fas fa-download"></i> Download Condensed Resume
-        </a>
-      </div>
+    <!-- Hidden download links for JS functionality -->
+    <div class="hidden">
+      <a id="download-full-btn" href="resume.pdf" download></a>
+      <a id="download-condensed-btn" href="resume_condensed.pdf" download></a>
     </div>
   </main>
 
-  <footer>
-    <div class="container">
-      <div class="contact-info">
-        <a href="mailto:hello@sohaib.ly" title="Email">
-          <i class="fas fa-envelope"></i>
-        </a>
-        <a href="https://sohaib.ly/" target="_blank" title="Website">
-          <i class="fas fa-globe"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/sohaib-sherif" target="_blank" title="LinkedIn">
-          <i class="fab fa-linkedin"></i>
-        </a>
-        <a href="https://github.com/Sohaib-Sherif" target="_blank" title="GitHub">
-          <i class="fab fa-github"></i>
-        </a>
-      </div>
-      <p class="copyright">&copy; <span id="current-year"></span> Sohaib Sherif. All rights reserved.</p>
+  <div class="footer-info">
+    <div class="contact-info">
+      <a href="mailto:hello@sohaib.ly" title="Email">
+        <i class="fas fa-envelope"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/sohaib-sherif" target="_blank" title="LinkedIn">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="https://github.com/Sohaib-Sherif" target="_blank" title="GitHub">
+        <i class="fab fa-github"></i>
+      </a>
     </div>
-  </footer>
+  </div>
 
   <!-- Custom JavaScript -->
   <script src="js/viewer.js"></script>

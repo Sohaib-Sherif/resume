@@ -3,10 +3,11 @@ let pdfDoc = null;
 let pageNum = 1;
 let pageRendering = false;
 let pageNumPending = null;
-// Set a larger default scale for better readability
-let scale = window.innerWidth < 768 ? 1.2 : 1.5;
+// Set a much larger default scale for better readability
+let scale = window.innerWidth < 768 ? 1.8 : 2.2;
 let canvas = document.getElementById('pdf-render');
 let ctx = canvas.getContext('2d');
+let pdfViewport = null; // Store the viewport for reference
 
 // Resume paths
 const resumePaths = {
@@ -29,18 +30,14 @@ const downloadCondensedBtn = document.getElementById('download-condensed-btn');
 const fullscreenBtn = document.getElementById('fullscreen-btn');
 const pdfContainer = document.querySelector('.pdf-container');
 const loadingIndicator = document.querySelector('.loading-indicator');
-const currentYear = document.getElementById('current-year');
 
 // Initialize the viewer
 document.addEventListener('DOMContentLoaded', () => {
-    // Set current year in footer
-    currentYear.textContent = new Date().getFullYear();
-    
     // Update zoom level display to match initial scale
     zoomLevel.textContent = `${Math.round(scale * 100)}%`;
     
-    // Set the full resume button as active by default
-    downloadFullBtn.classList.add('active');
+    // Set the download button href to the default resume
+    downloadBtn.href = resumePaths.full;
     
     // Load the default resume (full version)
     loadPdf(resumePaths.full);
@@ -91,14 +88,14 @@ function renderPage(num) {
     // Get the page
     pdfDoc.getPage(num).then(page => {
         // Adjust canvas size based on the PDF page and scale
-        const viewport = page.getViewport({ scale });
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
+        pdfViewport = page.getViewport({ scale });
+        canvas.height = pdfViewport.height;
+        canvas.width = pdfViewport.width;
         
         // Render the PDF page
         const renderContext = {
             canvasContext: ctx,
-            viewport: viewport
+            viewport: pdfViewport
         };
         
         const renderTask = page.render(renderContext);
@@ -154,8 +151,8 @@ function nextPageHandler() {
  * Zoom in the PDF
  */
 function zoomInHandler() {
-    if (scale >= 2.0) return;
-    scale += 0.1;
+    if (scale >= 4.0) return; // Allow higher maximum zoom
+    scale += 0.2;
     zoomLevel.textContent = `${Math.round(scale * 100)}%`;
     queueRenderPage(pageNum);
 }
@@ -164,27 +161,9 @@ function zoomInHandler() {
  * Zoom out the PDF
  */
 function zoomOutHandler() {
-    if (scale <= 0.5) return;
-    scale -= 0.1;
+    if (scale <= 0.5) return; // Allow lower minimum zoom
+    scale -= 0.2;
     zoomLevel.textContent = `${Math.round(scale * 100)}%`;
-    queueRenderPage(pageNum);
-}
-
-/**
- * Toggle fullscreen mode
- */
-function toggleFullscreen() {
-    pdfContainer.classList.toggle('fullscreen-mode');
-    
-    if (pdfContainer.classList.contains('fullscreen-mode')) {
-        fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
-        fullscreenBtn.title = 'Exit Fullscreen';
-    } else {
-        fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
-        fullscreenBtn.title = 'Fullscreen';
-    }
-    
-    // Re-render the current page to adjust to the new container size
     queueRenderPage(pageNum);
 }
 
@@ -195,19 +174,17 @@ function toggleResume() {
     const isCondensed = resumeSwitch.checked;
     const resumePath = isCondensed ? resumePaths.condensed : resumePaths.full;
     
-    // Reset page number and scale
+    // Reset page number
     pageNum = 1;
     
     // Update download button in the controls
     downloadBtn.href = resumePath;
     
-    // Add visual indication of which version is active
+    // Update hidden download links
     if (isCondensed) {
-        downloadFullBtn.classList.remove('active');
-        downloadCondensedBtn.classList.add('active');
+        downloadBtn.setAttribute('title', 'Download Condensed Resume');
     } else {
-        downloadFullBtn.classList.add('active');
-        downloadCondensedBtn.classList.remove('active');
+        downloadBtn.setAttribute('title', 'Download Full Resume');
     }
     
     // Load the selected resume
@@ -228,9 +205,7 @@ function setupEventListeners() {
     // Page navigation
     prevPage.addEventListener('click', prevPageHandler);
     nextPage.addEventListener('click', nextPageHandler);
-    
-    // Fullscreen toggle
-    fullscreenBtn.addEventListener('click', toggleFullscreen);
+
     
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
@@ -248,15 +223,31 @@ function setupEventListeners() {
     // Handle window resize
     window.addEventListener('resize', () => {
         if (pdfDoc) {
-            // Adjust scale based on screen width
-            if (window.innerWidth < 768 && scale > 1.3) {
-                scale = 1.2;
+            // Adjust scale based on screen width but preserve user's zoom level
+            const currentZoomPercent = Math.round(scale * 100);
+            const defaultZoom = window.innerWidth < 768 ? 1.8 : 2.2;
+            const defaultZoomPercent = Math.round(defaultZoom * 100);
+            
+            // Only reset to default if user hasn't manually zoomed
+            if (currentZoomPercent === defaultZoomPercent || 
+                (window.innerWidth < 768 && currentZoomPercent > 220) || 
+                (window.innerWidth >= 768 && currentZoomPercent < 180)) {
+                scale = defaultZoom;
                 zoomLevel.textContent = `${Math.round(scale * 100)}%`;
-            } else if (window.innerWidth >= 768 && scale < 1.3) {
-                scale = 1.5;
-                zoomLevel.textContent = `${Math.round(scale * 100)}%`;
+                queueRenderPage(pageNum);
             }
-            queueRenderPage(pageNum);
         }
     });
+    
+    // Add mouse wheel zoom support
+    pdfContainer.addEventListener('wheel', (e) => {
+        if (e.ctrlKey || e.metaKey) {
+            e.preventDefault();
+            if (e.deltaY < 0) {
+                zoomInHandler();
+            } else {
+                zoomOutHandler();
+            }
+        }
+    }, { passive: false });
 }
