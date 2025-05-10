@@ -202,7 +202,6 @@ main {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    /* Align to top */
     overflow: auto;
     width: 100%;
     height: 100%;
@@ -212,12 +211,10 @@ main {
 #pdf-render {
     max-width: 100%;
     min-width: 70%;
-    /* Ensure PDF takes significant width */
     height: auto;
     transform-origin: top center;
     box-shadow: var(--box-shadow);
     margin: 0 auto;
-    /* Center horizontally */
 }
 
 .loading-indicator {
@@ -262,7 +259,8 @@ main {
     background-color: rgba(255, 255, 255, 0.6);
     border-radius: 20px;
     padding: 5px 10px;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(15px);
+    border: 1px solid black;
 }
 
 .contact-info {
@@ -291,9 +289,15 @@ main {
 
 /* Responsive Styles */
 @media (max-width: 768px) {
+
+    /* Navbar adjustments for tablet */
+    .minimal-navbar {
+        padding: 8px 0;
+    }
+
     .navbar-content {
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 8px;
         justify-content: center;
     }
 
@@ -303,7 +307,7 @@ main {
         width: 100%;
         justify-content: center;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 8px;
     }
 
     .navbar-right {
@@ -311,41 +315,132 @@ main {
     }
 
     .control-btn {
-        width: 40px;
-        height: 40px;
+        width: 38px;
+        height: 38px;
     }
 
+    /* Footer adjustments for tablet */
     .footer-info {
-        width: 100%;
-        flex-direction: column;
-        align-items: center;
-        padding: 5px;
+        bottom: 5px;
+        right: 5px;
+        padding: 4px 8px;
+    }
+
+    .contact-info {
+        gap: 6px;
+    }
+
+    .contact-info a {
+        width: 26px;
+        height: 26px;
+        font-size: 13px;
+    }
+
+    /* Mobile PDF container adjustments */
+    .pdf-container {
+        padding: 10px;
+    }
+
+    #pdf-render {
+        min-width: 95%;
+        margin: 0 auto;
     }
 }
 
 @media (max-width: 576px) {
+
+    /* Navbar adjustments for mobile */
+    .minimal-navbar {
+        padding: 5px 0;
+    }
+
+    .navbar-content {
+        gap: 5px;
+    }
+
     .toggle-label {
-        width: 140px;
-        height: 32px;
-        font-size: 12px;
+        width: 120px;
+        height: 28px;
+        font-size: 11px;
     }
 
     .toggle-label::after {
-        width: 70px;
-        height: 24px;
+        width: 60px;
+        height: 22px;
     }
 
     .toggle-input:checked+.toggle-label::after {
-        left: calc(100% - 74px);
+        left: calc(100% - 64px);
     }
 
     #zoom-level,
     #page-info {
-        font-size: 12px;
+        font-size: 11px;
     }
 
     .control-btn {
-        width: 36px;
-        height: 36px;
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+
+    .zoom-controls,
+    .page-controls,
+    .action-controls {
+        gap: 5px;
+    }
+
+    /* Compact navbar layout */
+    .navbar-left,
+    .navbar-center,
+    .navbar-right {
+        gap: 5px;
+        margin-bottom: 2px;
+    }
+
+    /* Last navbar section doesn't need bottom margin */
+    .navbar-right {
+        margin-bottom: 0;
+    }
+
+    /* Footer adjustments for mobile */
+    .footer-info {
+        bottom: 3px;
+        right: 40%;
+        padding: 3px 6px;
+        background-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .contact-info {
+        gap: 4px;
+    }
+
+    .contact-info a {
+        width: 22px;
+        height: 22px;
+        font-size: 11px;
+    }
+
+    /* Small mobile PDF container adjustments */
+    .pdf-container {
+        padding: 3px;
+    }
+
+    #pdf-render {
+        min-width: 100%;
+        box-shadow: none;
+    }
+
+    /* Adjust body to maximize available space */
+    body {
+        height: 100vh;
+        max-height: -webkit-fill-available;
+    }
+
+    /* Ensure main takes all available space */
+    main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
     }
 }
