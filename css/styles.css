@@ -265,66 +265,6 @@ main {
     transform: translateY(-2px);
 }
 
-/* Responsive Styles */
-@media (max-width: 768px) {
-
-    /* Navbar adjustments for tablet */
-    .minimal-navbar {
-        padding: 8px 0;
-    }
-
-    .navbar-content {
-        flex-wrap: wrap;
-        gap: 8px;
-        justify-content: center;
-    }
-
-    .navbar-left,
-    .navbar-center,
-    .navbar-right {
-        width: 100%;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-
-    .navbar-right {
-        justify-content: center;
-    }
-
-    .control-btn {
-        width: 38px;
-        height: 38px;
-    }
-
-    /* Footer adjustments for tablet */
-    .footer-info {
-        bottom: 5px;
-        right: 5px;
-        padding: 4px 8px;
-    }
-
-    .contact-info {
-        gap: 6px;
-    }
-
-    .contact-info a {
-        width: 26px;
-        height: 26px;
-        font-size: 13px;
-    }
-
-    /* Mobile PDF container adjustments */
-    .pdf-container {
-        padding: 10px;
-    }
-
-    #pdf-render {
-        min-width: 95%;
-        margin: 0 auto;
-    }
-}
-
 /* Navbar visibility */
 .desktop-navbar {
     display: block;
