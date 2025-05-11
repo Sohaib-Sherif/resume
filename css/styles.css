@@ -1,0 +1,469 @@
+/* Base Styles */
+:root {
+    --primary-color: #42A8C0;
+    --secondary-color: #2d7788;
+    --dark-color: #3F4650;
+    --light-color: #f5f5f5;
+    --text-color: #545E6C;
+    --border-radius: 4px;
+    --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', 'Roboto', sans-serif;
+    color: var(--text-color);
+    background-color: var(--light-color);
+    line-height: 1.6;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--primary-color);
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    transition: var(--transition);
+}
+
+button:focus {
+    outline: none;
+}
+
+/* Minimal Navbar Styles */
+.minimal-navbar {
+    background-color: white;
+    box-shadow: var(--box-shadow);
+    padding: 10px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-left,
+.navbar-center,
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-right {
+    display: flex;
+    gap: 15px;
+}
+
+/* Resume Toggle Styles */
+.resume-toggle {
+    display: flex;
+    align-items: center;
+}
+
+.button-toggle-container {
+    display: flex;
+    overflow: hidden;
+    border-radius: 18px;
+    box-shadow: var(--box-shadow);
+}
+
+.toggle-button {
+    padding: 8px 16px;
+    min-width: 80px;
+    height: 36px;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    background-color: #e0e0e0;
+    color: #333;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.toggle-button:first-child {
+    border-top-left-radius: 18px;
+    border-bottom-left-radius: 18px;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.toggle-button:last-child {
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+}
+
+.toggle-button-active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.toggle-button:hover:not(.toggle-button-active) {
+    background-color: #d0d0d0;
+}
+
+/* Controls Styles */
+.zoom-controls,
+.page-controls,
+.action-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.control-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: var(--light-color);
+    color: var(--dark-color);
+    transition: var(--transition);
+}
+
+.control-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+#zoom-level,
+#page-info {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Main Content Styles */
+main {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* PDF Container Styles */
+.pdf-container {
+    flex: 1;
+    background-color: #f0f0f0;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+
+#pdf-render {
+    max-width: 100%;
+    min-width: 70%;
+    height: auto;
+    transform-origin: top center;
+    box-shadow: var(--box-shadow);
+    margin: 0 auto;
+}
+
+.loading-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(66, 168, 192, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--primary-color);
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Hide elements that are not needed */
+.hidden {
+    display: none;
+}
+
+/* Footer Info Styles */
+.footer-info {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    gap: 8px;
+    z-index: 50;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    padding: 5px 10px;
+    backdrop-filter: blur(15px);
+    border: 1px solid black;
+}
+
+.contact-info {
+    display: flex;
+    gap: 8px;
+}
+
+.contact-info a {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: var(--dark-color);
+    transition: var(--transition);
+    font-size: 14px;
+}
+
+.contact-info a:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Navbar visibility */
+.desktop-navbar {
+    display: block;
+}
+
+.mobile-navbar {
+    display: none;
+}
+
+/* Mobile controls layout */
+.mobile-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 5px;
+}
+
+/* Mobile navbar specific styles - always apply these regardless of screen size */
+.mobile-navbar .navbar-center,
+.mobile-navbar .navbar-right {
+    width: auto !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    margin: 0 !important;
+    flex-wrap: nowrap !important;
+}
+
+.mobile-navbar .navbar-right {
+    justify-content: flex-end !important;
+    gap: 5px !important;
+}
+
+.mobile-navbar .page-controls,
+.mobile-navbar .zoom-controls,
+.mobile-navbar .action-controls {
+    flex-direction: row !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+}
+
+.mobile-navbar .mobile-controls {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    margin-top: 5px !important;
+}
+
+@media (max-width: 576px) {
+
+    /* Show mobile navbar, hide desktop navbar */
+    .desktop-navbar {
+        display: none;
+    }
+
+    .mobile-navbar {
+        display: block;
+    }
+
+    /* Navbar adjustments for mobile */
+    .minimal-navbar {
+        padding: 5px 0;
+    }
+
+    .navbar-content {
+        gap: 5px;
+        flex-direction: column;
+    }
+
+    /* First row: Resume toggle */
+    .navbar-left {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 5px;
+    }
+
+    /* Mobile navbar adjustments */
+    .mobile-navbar .navbar-content {
+        flex-direction: column !important;
+    }
+
+    .mobile-navbar .navbar-left {
+        width: 100% !important;
+        justify-content: center !important;
+        margin-bottom: 5px !important;
+    }
+
+    .mobile-navbar .navbar-center {
+        width: 60% !important;
+        justify-content: flex-start !important;
+    }
+
+    .mobile-navbar .navbar-right {
+        width: 40% !important;
+        justify-content: flex-end !important;
+    }
+
+    /* Fix for page info text wrapping */
+    .mobile-navbar #page-info-mobile {
+        white-space: nowrap !important;
+        font-size: 10px !important;
+    }
+
+    /* Make mobile controls smaller */
+    .mobile-navbar .control-btn {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 10px !important;
+    }
+
+    .mobile-navbar #zoom-level-mobile {
+        font-size: 10px !important;
+    }
+
+    .mobile-navbar .zoom-controls,
+    .mobile-navbar .page-controls,
+    .mobile-navbar .action-controls {
+        gap: 3px !important;
+    }
+
+    .button-toggle-container {
+        border-radius: 14px;
+    }
+
+    .toggle-button {
+        padding: 6px 12px;
+        min-width: 60px;
+        height: 28px;
+        font-size: 11px;
+    }
+
+    .toggle-button:first-child {
+        border-top-left-radius: 14px;
+        border-bottom-left-radius: 14px;
+    }
+
+    .toggle-button:last-child {
+        border-top-right-radius: 14px;
+        border-bottom-right-radius: 14px;
+    }
+
+    #zoom-level,
+    #page-info {
+        font-size: 11px;
+    }
+
+    .control-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+
+    .zoom-controls,
+    .page-controls,
+    .action-controls {
+        gap: 5px;
+    }
+
+    /* Footer adjustments for mobile */
+    .footer-info {
+        bottom: 3px;
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 3px 6px;
+        background-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .contact-info {
+        gap: 4px;
+    }
+
+    .contact-info a {
+        width: 22px;
+        height: 22px;
+        font-size: 11px;
+    }
+
+    /* Small mobile PDF container adjustments */
+    .pdf-container {
+        padding: 3px;
+    }
+
+    #pdf-render {
+        min-width: 100%;
+        box-shadow: none;
+    }
+
+    /* Adjust body to maximize available space */
+    body {
+        height: 100vh;
+        max-height: -webkit-fill-available;
+    }
+
+    /* Ensure main takes all available space */
+    main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+}
